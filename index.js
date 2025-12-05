@@ -2,6 +2,8 @@ var fs = require('fs');
 var _ = require('lodash');
 var gravatar = require('gravatar');
 var Mustache = require('mustache');
+var micromark = require('micromark');
+var striptags = require('striptags');
 
 var d = new Date();
 var curyear = d.getFullYear();
@@ -35,7 +37,25 @@ function getMonth(startDateStr) {
     }
 }
 
+
+/**
+ * @param {string} doc
+ * @param {boolean} [stripTags]
+ * @returns
+ */
+function markdown(doc, stripTags = false) {
+  // @ts-expect-error missing micromark types
+  const html = /** @type {string} */ (micromark(doc))
+  return stripTags ? striptags(html) : html
+}
+
 function render(resumeObject) {
+
+    resumeObject.markdown = function () {
+        return function (text, render) {
+            return render(markdown(text),true);
+        }
+    }
 
     resumeObject.basics.capitalName = resumeObject.basics.name.toUpperCase();
     if(resumeObject.basics && resumeObject.basics.email) {
