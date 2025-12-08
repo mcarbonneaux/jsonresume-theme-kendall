@@ -131,7 +131,7 @@
                   <div class="job-details col-xs-11">
                     <div class="profession">{{position}}</div>
                     <div class="description">
-                      {{#markdown}}{{{summary}}}{{{/markdown}}}
+                      {{#markdown}}{{{summary}}}{{/markdown}}
                       {{#boolHighlights}}
                       <div class="highlights">Highlights</div>
                       <ul class="list-group">
