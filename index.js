@@ -53,7 +53,7 @@ function render(resumeObject) {
 
     resumeObject.markdown = function () {
         return function (text, render) {
-            return markdown(text,false);
+            return markdown(render(text,true),false);
         }
     }
 
